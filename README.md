@@ -5,12 +5,27 @@
 </p>
 
 <p align="center">
+  <a href="https://liutg.github.io/knowledge-manager-tool/" target="_blank">
+    <img src="https://img.shields.io/badge/官网-点击访问-blue?style=for-the-badge" alt="官网">
+  </a>
+  <a href="https://github.com/LiuTG/knowledge-manager-tool" target="_blank">
+    <img src="https://img.shields.io/badge/GitHub-仓库地址-black?style=for-the-badge&logo=github" alt="GitHub">
+  </a>
+  <a href="https://gitee.com/liusanye/knowledge-manager-tool" target="_blank">
+    <img src="https://img.shields.io/badge/Gitee-仓库地址-red?style=for-the-badge" alt="Gitee">
+  </a>
+</p>
+
+<p align="center">
   <a href="#功能特性">功能特性</a> •
   <a href="#安装使用">安装使用</a> •
   <a href="#使用指南">使用指南</a> •
   <a href="#技术栈">技术栈</a> •
   <a href="#关于作者">关于作者</a>
 </p>
+
+> **项目官网**: https://liutg.github.io/knowledge-manager-tool/  
+> 点击上方链接即可访问项目官网，了解软件详细介绍和使用说明。
 
 ---
 
