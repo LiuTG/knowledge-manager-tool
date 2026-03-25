@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知识管理工具 - iAssistantforPC</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --apple-blue: #007AFF;
+            --apple-blue-hover: #0066D6;
+            --apple-blue-light: #E5F1FF;
+            --apple-bg: #F5F5F7;
+            --text-primary: #1D1D1F;
+            --text-secondary: #86868B;
+            --white: #FFFFFF;
+            --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 30px 60px rgba(0, 0, 0, 0.12);
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 30px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            opacity: 0.8;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, var(--apple-bg) 0%, var(--white) 100%);
+            padding: 120px 30px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(0, 122, 255, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--apple-blue-light);
+            color: var(--apple-blue);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .hero-subtitle {
+            font-size: 1.6rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 18px;
+            letter-spacing: -0.3px;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 580px;
+            margin: 0 auto 35px;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 32px;
+            border-radius: 980px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--apple-blue);
+            color: white;
+            box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--apple-blue-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 122, 255, 0.35);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1.5px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: var(--text-primary);
+            color: white;
+            border-color: var(--text-primary);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 100px 30px;
+        }
+
+        .section-light {
+            background: var(--apple-bg);
+        }
+
+        .section-container {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 65px;
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--apple-blue);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 2.6rem;
+            font-weight: 600;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 0 auto;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 44px 36px;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--apple-blue);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.75;
+            font-size: 0.98rem;
+        }
+
+        /* Workflow Section */
+        .workflow {
+            background: var(--white);
+        }
+
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            position: relative;
+        }
+
+        .workflow-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .workflow-step::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--apple-blue);
+            opacity: 0.5;
+        }
+
+        .workflow-step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            width: 56px;
+            height: 56px;
+            background: var(--apple-blue-light);
+            color: var(--apple-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0 auto 18px;
+        }
+
+        .step-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .step-description {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        /* Tech Specs */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .spec-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+        }
+
+        .spec-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .spec-icon {
+            font-size: 2.5rem;
+            margin-bottom: 18px;
+        }
+
+        .spec-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .spec-value {
+            color: var(--apple-blue);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .spec-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Benefits */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .benefit-card {
+            background: rgba(0, 122, 255, 0.03);
+            border: 1px solid rgba(0, 122, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: var(--transition-smooth);
+        }
+
+        .benefit-card:hover {
+            background: rgba(0, 122, 255, 0.06);
+            transform: translateY(-4px);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 18px;
+        }
+
+        .benefit-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .benefit-description {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        /* Screenshot Section */
+        .screenshot-section {
+            background: var(--apple-bg);
+            padding: 100px 30px;
+        }
+
+        .screenshot-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .screenshot-placeholder {
+            background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 20px;
+            padding: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 500px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+        }
+
+        .screenshot-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--apple-bg);
+            padding: 80px 30px;
+        }
+
+        .footer-container {
+            max-width: 980px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            letter-spacing: -1px;
+        }
+
+        .footer-description {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 35px;
+            line-height: 1.8;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 45px;
+        }
+
+        .footer-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 26px;
+            background: var(--white);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 980px;
+            font-size: 0.92rem;
+            font-weight: 500;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: var(--transition-smooth);
+        }
+
+        .footer-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-link svg {
+            width: 17px;
+            height: 17px;
+        }
+
+        .footer-copyright {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .footer-copyright a {
+            color: var(--apple-blue);
+            text-decoration: none;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(35px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.7s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .workflow-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 40px;
+            }
+
+            .workflow-step::after {
+                display: none;
+            }
+
+            .specs-grid,
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 680px) {
+            .hero h1 {
+                font-size: 2.4rem;
+                letter-spacing: -1px;
+            }
+
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .workflow-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .specs-grid,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 100px 20px 60px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 70px 20px;
+            }
+
+            .feature-card {
+                padding: 35px 25px;
+            }
+
+            .btn {
+                padding: 12px 26px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Guide Section */
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .guide-column {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .guide-column-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--apple-blue-light);
+            color: var(--text-primary);
+        }
+
+        .guide-item {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .guide-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .guide-item-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .guide-item-icon {
+            font-size: 1.5rem;
+        }
+
+        .guide-item-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .guide-item-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .guide-item-steps {
+            background: var(--apple-bg);
+            border-radius: 12px;
+            padding: 15px 18px;
+        }
+
+        .guide-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .guide-step-num {
+            width: 22px;
+            height: 22px;
+            background: var(--apple-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        /* Tips Section */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .tip-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 35px 28px;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+        }
+
+        .tip-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .tip-icon {
+            font-size: 2.2rem;
+            margin-bottom: 18px;
+        }
+
+        .tip-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .tip-list {
+            list-style: none;
+        }
+
+        .tip-list li {
+            padding: 6px 0;
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tip-list li::before {
+            content: '•';
+            color: var(--apple-blue);
+            font-weight: bold;
+        }
+
+        kbd {
+            background: var(--apple-bg);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: var(--apple-blue);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .guide-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .guide-column {
+                padding: 30px 25px;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn {
+            padding: 12px 26px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">知识管理工具</a>
+            <ul class="nav-links">
+                <li><a href="#features">功能</a></li>
+                <li><a href="#workflow">使用流程</a></li>
+                <li><a href="#guide">操作指南</a></li>
+                <li><a href="#tech">技术特性</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge animate-fade-in">iAssistantforPC 核心工具</div>
+            <h1 class="animate-fade-in delay-1">知识管理工具</h1>
+            <p class="hero-subtitle animate-fade-in delay-2">智能提示词与知识库一站式管理</p>
+            <p class="hero-description animate-fade-in delay-3">
+                强大的提示词管理和知识库管理工具，支持分类组织、快速搜索、一键复制，
+                让您的 AI 创作更加高效便捷。
+            </p>
+            <div class="hero-buttons animate-fade-in delay-4">
+                <a href="#features" class="btn btn-primary">了解更多</a>
+                <a href="https://github.com/yourusername/iAssistantforPC" class="btn btn-secondary" target="_blank">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px;">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-label">核心功能</p>
+                <h2 class="section-title">强大的知识管理能力</h2>
+                <p class="section-description">
+                    专为高效管理提示词和知识库而设计，满足各种创作场景需求
+                </p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">📚</span>
+                    <h3 class="feature-title">知识资源管理</h3>
+                    <p class="feature-description">
+                        统一管理各类知识资源，包括电子书、视频、代码、文档、图片、音频等，
+                        分类清晰，触手可及。
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📁</span>
+                    <h3 class="feature-title">项目管理</h3>
+                    <p class="feature-description">
+                        支持创建多个项目，每个项目独立管理资源、待办清单和笔记，
+                        按项目和资源类型双维度组织。
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🔍</span>
+                    <h3 class="feature-title">智能检索</h3>
+                    <p class="feature-description">
+                        自动扫描项目目录下的所有文件，实时追踪资源变化，
+                        支持按名称、类型、日期等多维度筛选。
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">✅</span>
+                    <h3 class="feature-title">待办清单</h3>
+                    <p class="feature-description">
+                        为每个项目创建待办事项，记录任务进度，
+                        支持搜索已完成/未完成状态筛选。
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🔗</span>
+                    <h3 class="feature-title">资源关联</h3>
+                    <p class="feature-description">
+                        将任何类型的资源关联到项目中，支持添加资源备注说明，
+                        灵活管理项目资料库。
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📋</span>
+                    <h3 class="feature-title">全量视图</h3>
+                    <p class="feature-description">
+                        资源清单功能汇总所有项目的资源文件，
+                        可按项目、类型快速筛选，掌控全局资源分布。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow Section -->
+    <section class="section section-light workflow" id="workflow">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-label">使用流程</p>
+                <h2 class="section-title">简单高效的工作流</h2>
+                <p class="section-description">
+                    清晰的操作流程，让知识管理变得轻松自如
+                </p>
+            </div>
+            <div class="workflow-grid">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">创建项目</h3>
+                    <p class="step-description">
+                        新建项目并配置资源目录，规划项目结构
+                    </p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">添加资源</h3>
+                    <p class="step-description">
+                        手动或自动扫描添加各类资源文件
+                    </p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">管理待办</h3>
+                    <p class="step-description">
+                        创建待办清单，记录任务进度
+                    </p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">全局掌控</h3>
+                    <p class="step-description">
+                        资源清单查看所有项目资源分布
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Specs Section -->
+    <section class="section" id="tech">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-label">技术特性</p>
+                <h2 class="section-title">纯 Vibe Coding 实现</h2>
+                <p class="section-description">
+                    采用现代化技术栈，全程使用 AI 辅助编码，确保稳定性和用户体验
+                </p>
+            </div>
+            <div class="specs-grid">
+                <div class="spec-card">
+                    <div class="spec-icon">🐍</div>
+                    <div class="spec-title">Python + PyQt5</div>
+                    <div class="spec-value">Qt5</div>
+                    <div class="spec-description">成熟稳定的桌面应用框架</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">🤖</div>
+                    <div class="spec-title">AI 辅助开发</div>
+                    <div class="spec-value">Vibe</div>
+                    <div class="spec-description">全程 AI 辅助设计与实现</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">💾</div>
+                    <div class="spec-title">本地数据存储</div>
+                    <div class="spec-value">JSON</div>
+                    <div class="spec-description">轻量高效的数据格式</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="section section-light">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-label">核心优势</p>
+                <h2 class="section-title">为什么选择知识管理工具</h2>
+                <p class="section-description">
+                    精心打磨的每一个细节，为您提供最佳体验
+                </p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <h3 class="benefit-title">高效快捷</h3>
+                    <p class="benefit-description">
+                        一键复制、快捷键支持，让工作效率提升 10 倍
+                    </p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🔒</div>
+                    <h3 class="benefit-title">安全可靠</h3>
+                    <p class="benefit-description">
+                        本地存储、数据加密，您的知识数据完全自主掌控
+                    </p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <h3 class="benefit-title">精准分类</h3>
+                    <p class="benefit-description">
+                        树形结构 + 标签系统，多维度组织知识体系
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Guide Section -->
+    <section class="section section-light" id="guide">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-label">操作指南</p>
+                <h2 class="section-title">详细功能与使用流程</h2>
+                <p class="section-description">
+                    了解知识管理工具的每一个功能，掌握最佳使用方式
+                </p>
+            </div>
+
+            <!-- Left Column: 功能详细介绍 -->
+            <div class="guide-grid">
+                <div class="guide-column">
+                    <h3 class="guide-column-title">📂 项目与资源</h3>
+
+                    <div class="guide-item">
+                        <div class="guide-item-header">
+                            <span class="guide-item-icon">📁</span>
+                            <h4 class="guide-item-title">项目管理</h4>
+                        </div>
+                        <p class="guide-item-desc">
+                            创建和管理多个项目，每个项目可独立配置资源目录、待办清单和项目笔记。
+                            支持项目分类：学习项目、工作项目、研究项目等。
+                        </p>
+                        <div class="guide-item-steps">
+                            <div class="guide-step">
+                                <span class="guide-step-num">1</span>
+                                <span>点击工具栏"+"按钮新建项目</span>
+                            </div>
+                            <div class="guide-step">
+                                <span class="guide-step-num">2</span>
+                                <span>填写项目名称、选择项目类型</span>
+                            </div>
+                            <div class="guide-step">
+                                <span class="guide-step-num">3</span>
+                                <span>配置项目关联的资源目录（可选）</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="guide-item">
+                        <div class="guide-item-header">
+                            <span class="guide-item-icon">📚</span>
+                            <h4 class="guide-item-title">资源管理</h4>
+                        </div>
+                        <p class="guide-item-desc">
+                            为项目添加和管理各类资源文件：电子书、视频、代码、文档、图片、音频等。
+                            支持单个添加和批量导入，自动识别文件类型。
+                        </p>
+                        <div class="guide-item-steps">
+                            <div class="guide-step">
+                                <span class="guide-step-num">1</span>
+                                <span>选中项目，点击"添加资源"</span>
+                            </div>
+                            <div class="guide-step">
+                                <span class="guide-step-num">2</span>
+                                <span>选择单个文件或批量选择多个文件</span>
+                            </div>
+                            <div class="guide-step">
+                                <span class="guide-step-num">3</span>
+                                <span>系统自动分类，可手动调整资源分类</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="guide-item">
+                        <div class="guide-item-header">
+                            <span class="guide-item-icon">🔍</span>
+                            <h4 class="guide-item-title">智能检索</h4>
+                        </div>
+                        <p class="guide-item-desc">
+                            配置项目目录后，系统自动扫描目录下所有文件并添加到资源列表。
+                            支持设置自动扫描间隔，实时追踪文件变化。
+                        </p>
+                        <div class="guide-item-steps">
+                            <div class="guide-step">
+                                <span class="guide-step-num">1</span>
+                                <span>在项目中配置资源目录路径</span>
+                            </div>
+                            <div class="guide-step">
+                                <span class="guide-step-num">2</span>
+                                <span>启用"自动扫描"功能并设置间隔</span>
+                            </div>
+                            <div class="guide-step">
+                                <span class="guide-step-num">3</span>
+                                <span>新文件自动检测并添加到资源列表</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: 待办与清单 -->
+                <div class="guide-column">
+                    <h3 class="guide-column-title">✅ 待办与视图</h3>
+
+                    <div class="guide-item">
+                        <div class="guide-item-header">
+                            <span class="guide-item-icon">📋</span>
+                            <h4 class="guide-item-title">待办清单</h4>
+                        </div>
+                        <p class="guide-item-desc">
+                            为每个项目创建待办事项列表，记录任务内容和完成状态。
+                            支持标记完成、编辑内容、删除事项，按已完成/未完成状态筛选。
+                        </p>
+                        <div class="guide-item-steps">
+                            <div class="guide-step">
+                                <span class="guide-step-num">1</span>
+                                <span>在项目详情中切换到"项目清单"标签</span>
+                            </div>
+                            <div class="guide-step">
+                                <span class="guide-step-num">2</span>
+                                <span>点击"+ 增加清单项"添加新任务</span>
+                            </div>
+                            <div class="guide-step">
+                                <span class="guide-step-num">3</span>
+                                <span>点击勾选标记完成，或编辑/删除</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="guide-item">
+                        <div class="guide-item-header">
+                            <span class="guide-item-icon">🔗</span>
+                            <h4 class="guide-item-title">资源关联</h4>
+                        </div>
+                        <p class="guide-item-desc">
+                            为资源添加备注说明，建立资源之间的关联关系。
+                            支持编辑资源备注、查看资源详情、快速定位资源位置。
+                        </p>
+                        <div class="guide-item-steps">
+                            <div class="guide-step">
+                                <span class="guide-step-num">1</span>
+                                <span>选中资源条目</span>
+                            </div>
+                            <div class="guide-step">
+                                <span class="guide-step-num">2</span>
+                                <span>点击"备注"按钮编辑资源说明</span>
+                            </div>
+                            <div class="guide-step">
+                                <span class="guide-step-num">3</span>
+                                <span>双击资源可打开文件所在位置</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="guide-item">
+                        <div class="guide-item-header">
+                            <span class="guide-item-icon">📊</span>
+                            <h4 class="guide-item-title">全量视图</h4>
+                        </div>
+                        <p class="guide-item-desc">
+                            "资源清单"功能汇总展示所有项目的资源文件，
+                            可按项目、文件类型、修改时间等多维度筛选，快速掌握全局资源分布。
+                        </p>
+                        <div class="guide-item-steps">
+                            <div class="guide-step">
+                                <span class="guide-step-num">1</span>
+                                <span>点击菜单"资源 → 资源清单"</span>
+                            </div>
+                            <div class="guide-step">
+                                <span class="guide-step-num">2</span>
+                                <span>选择筛选条件：项目、文件类型</span>
+                            </div>
+                            <div class="guide-step">
+                                <span class="guide-step-num">3</span>
+                                <span>点击资源可直接打开或定位文件</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Tips Section -->
+    <section class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-label">使用技巧</p>
+                <h2 class="section-title">高效使用建议</h2>
+                <p class="section-description">
+                    掌握这些技巧，让您的知识管理更加得心应手
+                </p>
+            </div>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-icon">📚</div>
+                    <h3 class="tip-title">资源管理</h3>
+                    <ul class="tip-list">
+                        <li>支持 7+ 资源类型分类</li>
+                        <li>电子书：PDF、EPUB、MOBI、TXT</li>
+                        <li>视频：MP4、AVI、MKV、MOV</li>
+                        <li>代码：PY、JS、HTML、Java</li>
+                        <li>文档：MD、DOCX、PPT、XLS</li>
+                    </ul>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">📌</div>
+                    <h3 class="tip-title">最佳实践</h3>
+                    <ul class="tip-list">
+                        <li>为每个项目配置独立的资源目录</li>
+                        <li>启用自动扫描保持资源列表实时更新</li>
+                        <li>定期整理待办清单，标记完成项</li>
+                        <li>为资源添加详细备注说明</li>
+                    </ul>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">🏗️</div>
+                    <h3 class="tip-title">项目组织</h3>
+                    <ul class="tip-list">
+                        <li>按项目类型分类：学习/工作/研究</li>
+                        <li>资源按类型分组：文档/代码/媒体</li>
+                        <li>使用资源分类：参考资料/灵感/产出</li>
+                        <li>保持项目结构简洁清晰</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <h2 class="footer-title">开始使用知识管理工具</h2>
+            <p class="footer-description">
+                提升您的 AI 创作效率，让知识管理变得更加简单有序
+            </p>
+            <div class="footer-links">
+                <a href="https://github.com/yourusername/iAssistantforPC" class="footer-link" target="_blank">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub 仓库
+                </a>
+                <a href="https://github.com/yourusername/iAssistantforPC/blob/main/code/knowledge_manager_tool.py" class="footer-link" target="_blank">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                    </svg>
+                    源代码
+                </a>
+                <a href="https://github.com/yourusername/iAssistantforPC/blob/main/docs/iAssistantforPC功能说明.md" class="footer-link" target="_blank">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    功能文档
+                </a>
+            </div>
+            <p class="footer-copyright">
+                © 2026 iAssistantforPC. All rights reserved. | 
+                Made with ❤️ by <a href="https://github.com/yourusername">iAssistantforPC Team</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .workflow-step, .spec-card, .benefit-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.08)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.8)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
