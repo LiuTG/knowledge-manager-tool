@@ -1,0 +1,104 @@
+{
+  "meta": {
+    "dataIdentifier": "km-projects-001",
+    "relatedTool": "com.iassistant.knowledge_manager",
+    "sourceFile": "knowledge_manager_tool.py",
+    "sourceCodePath": "C:/Users/ltg00/AppData/Local/Temp/_MEI236602",
+    "name": "个人知识管理工具数据文件",
+    "version": "2.0.0",
+    "createdAt": "2026-03-25T21:07:42.398344",
+    "dataFilePath": "D:/iAssistantforPC_Project/projecttmp/knowledge-manager-release/dist/data/knowledge_manager_data.json",
+    "lastModified": "2026-03-25T21:07:42.398344",
+    "description": "存储个人知识管理工具的项目数据，包括项目信息、资源文件等"
+  },
+  "dataSchema": {
+    "project": {
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "tags",
+          "type": "array",
+          "required": false
+        },
+        {
+          "name": "create_folder",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "name": "folder_path",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "created_time",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "modified_time",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "resources",
+          "type": "array",
+          "required": false
+        },
+        {
+          "name": "resource_count",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "last_modified",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "folder_descriptions",
+          "type": "object",
+          "required": false
+        },
+        {
+          "name": "project_logs",
+          "type": "array",
+          "required": false
+        }
+      ]
+    }
+  },
+  "content": {
+    "projects": []
+  },
+  "stats": {
+    "totalRecords": 0,
+    "lastAccessTime": "2026-03-25T21:07:42.398344",
+    "totalProjects": 0,
+    "totalResources": 0
+  }
+}

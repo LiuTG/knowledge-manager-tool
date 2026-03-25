@@ -77,26 +77,39 @@
 - 支持数据导入导出
 - 项目数据隔离
 
-## 安装使用
+## 下载安装
 
-### 环境要求
+### 方式一：直接下载可执行文件（推荐）
+
+无需安装 Python 环境，直接下载即可运行：
+
+1. 访问 [GitHub Releases 页面](https://github.com/LiuTG/knowledge-manager-tool/releases)
+2. 找到最新版本，点击展开 **Assets**
+3. 下载 `知识管理工具.exe` 文件
+4. 双击运行即可使用
+
+> **注意**：首次运行可能需要 Windows 确认安全提示，点击"仍要运行"即可。
+
+### 方式二：从源码运行
+
+#### 环境要求
 
 - Python 3.8+
 - PyQt5
 
-### 安装依赖
+#### 安装依赖
 
 ```bash
 pip install PyQt5
 ```
 
-### 运行程序
+#### 运行程序
 
 ```bash
 python knowledge_manager_tool.py
 ```
 
-### 打包发布
+#### 自行打包
 
 使用 PyInstaller 打包为独立应用：
 
